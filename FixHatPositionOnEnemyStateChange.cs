@@ -16,57 +16,71 @@ internal class FixHatPositionOnEnemyStateChange
             return;
         }
 
-        //Not working
         switch (__instance.enemyType.enemyName)
         {
             case "Jester":
-                HandleJesterStateChange(hatTransform, stateIndex);
+                HandleJesterStateChange(__instance.transform, hatTransform, stateIndex);
                 break;
             case "Maneater":
-                HandleManeaterStateChange(__instance.transform, hatTransform, stateIndex);
+                __instance.StartCoroutine(HandleManeaterStateChange(__instance.transform, hatTransform, stateIndex));
                 break;
         }
     }
 
-    private static void HandleJesterStateChange(Transform hat, int state)
+    private static void HandleJesterStateChange(Transform enemy, Transform hat, int state)
     {
         JollyLethal.PluginLogInfoWithPrefix("Handling Jesters change of state");
         switch (state)
         {
             case 0:
             case 1: // Boxed / Cranking State
+                JollyLethal.PluginLogInfoWithPrefix("Changing hat position due to change of jester state to winding/chilling");
                 var (_, posOffset, rotOffset, scale) = EnemyHatConfigs.GetJesterSantaHatConfig();
+
                 PlaceHatsOnEnemiesPatch.ApplyOffsetsToObject(hat, posOffset, rotOffset, scale);
                 break;
 
             case 2: // Popped / Chasing State
-                var (_, posOffsetPopped, rotOffsetPopped, scalePopped) = EnemyHatConfigs.GetJesterPoppedSantaHatConfig();
+                JollyLethal.PluginLogInfoWithPrefix("Changing hat position due to change of jester state to popped");
+                var (bonePath, posOffsetPopped, rotOffsetPopped, scalePopped) = EnemyHatConfigs.GetJesterPoppedSantaHatConfig();
+                Transform newParent = enemy.Find(bonePath);
+
+                hat.SetParent(newParent, false);
                 PlaceHatsOnEnemiesPatch.ApplyOffsetsToObject(hat, posOffsetPopped, rotOffsetPopped, scalePopped);
                 break;
         }
     }
 
-    private static void HandleManeaterStateChange(Transform enemy, Transform hat, int state)
+    private static System.Collections.IEnumerator HandleManeaterStateChange(Transform enemy, Transform hat, int state)
     {
+        yield return new WaitForSeconds(2.5f);
+
         JollyLethal.PluginLogInfoWithPrefix("Handling Maneaters change of state");
-        switch (state)
+
+        bool isAdult = (state == 2) || !IsManeaterInBabyState(enemy);
+        if (!isAdult)
         {
-            case 0: // Baby (Calm/Wandering)
-            case 1: // Baby (Crying)
-                var (bonePath, posOffset, rotOffset, scale) = EnemyHatConfigs.GetManeaterSantaHatConfig();
-                Transform newParent = enemy.Find(bonePath);
+            JollyLethal.PluginLogInfoWithPrefix("Changing hat position due to change of maneater appearance to smol");
+            var (bonePath, posOffset, rotOffset, scale) = EnemyHatConfigs.GetManeaterSantaHatConfig();
+            Transform newParent = enemy.Find(bonePath);
 
-                hat.SetParent(newParent, false);
-                PlaceHatsOnEnemiesPatch.ApplyOffsetsToObject(hat, posOffset, rotOffset, scale);
-                break;
-            case 2: // ADULT (Monster)
-                var (bonePathBig, posOffsetBig, rotOffsetBig, scaleBig) = EnemyHatConfigs.GetManeaterSantaHatConfig();
-                Transform newParentBig = enemy.Find(bonePathBig);
-
-                hat.SetParent(newParentBig, false);
-                PlaceHatsOnEnemiesPatch.ApplyOffsetsToObject(hat, posOffsetBig, rotOffsetBig, scaleBig);
-                break;        
+            hat.SetParent(newParent, false);
+            PlaceHatsOnEnemiesPatch.ApplyOffsetsToObject(hat, posOffset, rotOffset, scale);
         }
+        else
+        {
+            JollyLethal.PluginLogInfoWithPrefix("Changing hat position due to change of maneater appearance to big");
+            var (bonePathBig, posOffsetBig, rotOffsetBig, scaleBig) = EnemyHatConfigs.GetManeaterBigSantaHatConfig();
+            Transform newParentBig = enemy.Find(bonePathBig);
+
+            hat.SetParent(newParentBig, false);
+            PlaceHatsOnEnemiesPatch.ApplyOffsetsToObject(hat, posOffsetBig, rotOffsetBig, scaleBig);
+        }
+    }
+
+    internal static bool IsManeaterInBabyState(Transform maneater)
+    {
+        return maneater.Find("BabyMeshContainer").gameObject.activeSelf && !maneater.Find("MeshContainer").gameObject.activeSelf;
     }
 
     internal static Transform? RecursiveFindChild(Transform parent, string childName)

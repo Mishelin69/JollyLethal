@@ -1,0 +1,10 @@
+{
+"name": "JollyLethal",
+"version_number": "1.0.1",
+"website_url": "https://github.com/Mishelin69/JollyLethal",
+"description": "Santa makes lethal more jolly (adds santa hats to mobs)",
+"dependencies": [
+"BepInEx-BepInExPack-5.4.2100",
+"BMX-LobbyCompatibility-1.0.1"
+]
+}

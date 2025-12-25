@@ -60,10 +60,10 @@ internal class EnemyHatConfigs {
     internal static (string?, Vector3, Vector3, float) GetJesterPoppedSantaHatConfig()
     {
         return (
-                "MeshContainer/AnimContainer/metarig/BoxContainer/spine.004/spine.005",
-                new Vector3(-2.32f, -8.6f, 2.75f),
-                new Vector3(344f, 292f, 181f),
-                0f
+                "MeshContainer/AnimContainer/metarig/BoxContainer/spine.004/spine.005/spine.006/UpperJaw",
+                new Vector3(0, 0.1f, 1.2f),
+                new Vector3(0, 115, 0),
+                3f
                );
     }
     internal static (string?, Vector3, Vector3, float) GetNutcrackerSantaHatConfig()
