@@ -11,7 +11,14 @@ internal class PlaceHatOnPlayerPatch
     [HarmonyPostfix]
     private static void GiveHatToPlayer(PlayerControllerB __instance)
     {
-        JollyLethal.PluginLogInfoWithPrefix("Placing santa hat on player");
+        //TODO: fix this code
+        return;
+        if (Time.frameCount % 60 != 0 || !ShouldPlaceHatOnPlayersHat(__instance))
+        {
+            return;
+        }
+
+        JollyLethal.PluginLogInfoWithPrefix($"Placing santa hat on remote player: {__instance.playerUsername}");
 
         var (bonePath, posOffset, rotOffset, scale) = PlaceHatsOnEnemiesPatch.GetEnemyHatConfig("Masked");
         if (bonePath is null)
@@ -19,9 +26,17 @@ internal class PlaceHatOnPlayerPatch
             return;
         }
         Transform targetBone = PlaceHatsOnEnemiesPatch.GetHatPlaceTransform(__instance.transform, bonePath);
-        var hat = PlaceHatsOnEnemiesPatch.SpawnSantaHatOnEnemy(targetBone, posOffset, rotOffset, scale); 
-        int losLayer = LayerMask.NameToLayer("LineOfSight");
-        SetLayerRecursively(hat.gameObject, losLayer);
+        var hat = PlaceHatsOnEnemiesPatch.SpawnSantaHatOnEnemy(targetBone, posOffset, rotOffset, scale);
+        int defaultLayer = 0; 
+        SetLayerRecursively(hat.gameObject, defaultLayer);   
+    }
+
+    private static bool ShouldPlaceHatOnPlayersHat(PlayerControllerB __instance)
+    {
+        var (bonePath, _, _, _) = PlaceHatsOnEnemiesPatch.GetEnemyHatConfig("Masked");
+        return !__instance.IsOwner && !__instance.isPlayerDead &&
+                __instance.isPlayerControlled && 
+                __instance.transform.Find($"{bonePath}/{JollyLethal.JollyHatSpawnedObjName}") is null;
     }
 
     private static void SetLayerRecursively(GameObject obj, int newLayer)

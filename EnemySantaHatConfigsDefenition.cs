@@ -42,7 +42,7 @@ internal class EnemyHatConfigs {
     internal static (string?, Vector3, Vector3, float) GetBunkerSpiderSantaHatConfig()
     {
         return (
-                "MeshContainer/AnimContainer/Armature/Center/Head",
+                "MeshContainer/AnimContainer/Armature/Head",
                 new Vector3(0, 0.9101f, 0.5545f),
                 new Vector3(19f, 274f, 252f),
                 1.7525f
