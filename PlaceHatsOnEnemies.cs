@@ -16,15 +16,21 @@ internal class PlaceHatsOnEnemiesPatch
             return;
         }
 
-        string enemyName = __instance.enemyType.enemyName;
+        PlaceHatOnEnemyTransform(__instance.transform, __instance.enemyType);
+    }
+
+    internal static void PlaceHatOnEnemyTransform(Transform enemyTransform, EnemyType enemyType)
+    {
+        string enemyName = enemyType.enemyName;
         var (bonePath, posOffset, rotOffset, scale) = GetEnemyHatConfig(enemyName);
-        if (bonePath is null)
+        if (bonePath is null || JollyHatActions.DoesTransformAlreadyContainJollyHat(enemyTransform, bonePath))
         {
             return;
         }
-        Transform targetBone = GetHatPlaceTransform(__instance.transform, bonePath);
+        Transform targetBone = GetHatPlaceTransform(enemyTransform, bonePath);
         Transform hatPrefab = SpawnSantaHatOnEnemy(targetBone, posOffset, rotOffset, scale); 
         FixAdditionalChildrenPositions(enemyName, hatPrefab);
+
     }
 
     private static void FixAdditionalChildrenPositions(string enemyName, Transform hatParent)
@@ -32,10 +38,10 @@ internal class PlaceHatsOnEnemiesPatch
         switch(enemyName)
         {
             case "Crawler":
-                ChangeRotOfHatParentChild(hatParent, new Vector3(0, 285, 0));
+                JollyHatActions.ChangeRotOfHatParentChild(hatParent, new Vector3(0, 285, 0));
                 break;
             case "Maneater":
-                ChangeRotOfHatParentChild(hatParent, new Vector3(0, 115, 0));
+                JollyHatActions.ChangeRotOfHatParentChild(hatParent, new Vector3(0, 115, 0));
                 break;
         }
     }
@@ -46,36 +52,17 @@ internal class PlaceHatsOnEnemiesPatch
         hatPrefabSpawn.name = JollyLethal.JollyHatSpawnedObjName;
         Transform objToTranslate = hatPrefabSpawn.transform;
 
-        FixHatParentChildPosScale(objToTranslate);
-        ApplyOffsetsToObject(objToTranslate, posOffset, rotOffset, scale); 
+        JollyHatActions.FixHatParentChildPosScale(objToTranslate);
+        JollyHatActions.ApplyOffsetsToHat(objToTranslate, posOffset, rotOffset, scale); 
 
         return objToTranslate;
-    }
-
-    private static void FixHatParentChildPosScale(Transform parent)
-    {
-        Transform child = parent.GetChild(0);
-        ApplyOffsetsToObject(child, Vector3.zero, Vector3.zero, 1);
-    }
-
-    internal static void ApplyOffsetsToObject(Transform obj, Vector3 pos, Vector3 rot, float scale)
-    {
-        obj.localPosition = pos;
-        obj.localEulerAngles = rot;
-        obj.localScale = Vector3.one * scale;
-    }
+    }  
 
     internal static Transform GetHatPlaceTransform(Transform enemyTransform, string? bonePath)
     {
         Transform ret = enemyTransform.transform.Find(bonePath);
         return (ret is null) ? enemyTransform.transform : ret;
-    }
-
-    internal static void ChangeRotOfHatParentChild(Transform hatParent, Vector3 newRot)
-    {
-        Transform child = hatParent.GetChild(0);
-        child.localEulerAngles = newRot;
-    }
+    } 
 
     internal static (string?, Vector3, Vector3, float) GetEnemyHatConfig(string enemyName)
     {

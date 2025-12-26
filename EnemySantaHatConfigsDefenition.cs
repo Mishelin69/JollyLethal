@@ -2,7 +2,8 @@ using UnityEngine;
 
 namespace JollyLethal;
 
-internal class EnemyHatConfigs {
+internal class EnemyHatConfigs 
+{
     internal static (string?, Vector3, Vector3, float) GetBrackenSantaHatConfig()
     {
         return (

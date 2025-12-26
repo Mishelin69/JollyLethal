@@ -37,7 +37,7 @@ internal class FixHatPositionOnEnemyStateChange
                 JollyLethal.PluginLogInfoWithPrefix("Changing hat position due to change of jester state to winding/chilling");
                 var (_, posOffset, rotOffset, scale) = EnemyHatConfigs.GetJesterSantaHatConfig();
 
-                PlaceHatsOnEnemiesPatch.ApplyOffsetsToObject(hat, posOffset, rotOffset, scale);
+                JollyHatActions.ApplyOffsetsToHat(hat, posOffset, rotOffset, scale);
                 break;
 
             case 2: // Popped / Chasing State
@@ -46,7 +46,7 @@ internal class FixHatPositionOnEnemyStateChange
                 Transform newParent = enemy.Find(bonePath);
 
                 hat.SetParent(newParent, false);
-                PlaceHatsOnEnemiesPatch.ApplyOffsetsToObject(hat, posOffsetPopped, rotOffsetPopped, scalePopped);
+                JollyHatActions.ApplyOffsetsToHat(hat, posOffsetPopped, rotOffsetPopped, scalePopped);
                 break;
         }
     }
@@ -65,7 +65,7 @@ internal class FixHatPositionOnEnemyStateChange
             Transform newParent = enemy.Find(bonePath);
 
             hat.SetParent(newParent, false);
-            PlaceHatsOnEnemiesPatch.ApplyOffsetsToObject(hat, posOffset, rotOffset, scale);
+            JollyHatActions.ApplyOffsetsToHat(hat, posOffset, rotOffset, scale);
         }
         else
         {
@@ -74,7 +74,7 @@ internal class FixHatPositionOnEnemyStateChange
             Transform newParentBig = enemy.Find(bonePathBig);
 
             hat.SetParent(newParentBig, false);
-            PlaceHatsOnEnemiesPatch.ApplyOffsetsToObject(hat, posOffsetBig, rotOffsetBig, scaleBig);
+            JollyHatActions.ApplyOffsetsToHat(hat, posOffsetBig, rotOffsetBig, scaleBig);
         }
     }
 

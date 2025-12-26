@@ -13,6 +13,7 @@ internal class PlaceHatOnPlayerPatch
     {
         //TODO: fix this code
         return;
+        /*
         if (Time.frameCount % 60 != 0 || !ShouldPlaceHatOnPlayersHat(__instance))
         {
             return;
@@ -29,6 +30,7 @@ internal class PlaceHatOnPlayerPatch
         var hat = PlaceHatsOnEnemiesPatch.SpawnSantaHatOnEnemy(targetBone, posOffset, rotOffset, scale);
         int defaultLayer = 0; 
         SetLayerRecursively(hat.gameObject, defaultLayer);   
+        */
     }
 
     private static bool ShouldPlaceHatOnPlayersHat(PlayerControllerB __instance)
@@ -36,7 +38,7 @@ internal class PlaceHatOnPlayerPatch
         var (bonePath, _, _, _) = PlaceHatsOnEnemiesPatch.GetEnemyHatConfig("Masked");
         return !__instance.IsOwner && !__instance.isPlayerDead &&
                 __instance.isPlayerControlled && 
-                __instance.transform.Find($"{bonePath}/{JollyLethal.JollyHatSpawnedObjName}") is null;
+                !JollyHatActions.DoesTransformAlreadyContainJollyHat(__instance.transform, bonePath!);
     }
 
     private static void SetLayerRecursively(GameObject obj, int newLayer)
