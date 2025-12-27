@@ -19,16 +19,6 @@ internal class PlaceHatOnMaskedPatch
         yield return new WaitForSeconds(myWaitForSeconds);
 
         JollyLethal.PluginLogInfoWithPrefix("Placing santa hat on masked");
-        if (enemy is null || enemy.isEnemyDead) {
-            yield break;
-        }
-
-        var (bonePath, posOffset, rotOffset, scale) = PlaceHatsOnEnemiesPatch.GetEnemyHatConfig("Masked");
-        if (bonePath is null)
-        {
-            yield break;
-        }
-        Transform targetBone = PlaceHatsOnEnemiesPatch.GetHatPlaceTransform(enemy.transform, bonePath);
-        PlaceHatsOnEnemiesPatch.SpawnSantaHatOnEnemy(targetBone, posOffset, rotOffset, scale); 
+        PlaceHatsOnEnemiesPatch.PlaceHatOnEnemyTransform(enemy.transform, enemy.enemyType);
     }
 }

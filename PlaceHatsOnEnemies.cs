@@ -28,9 +28,8 @@ internal class PlaceHatsOnEnemiesPatch
             return;
         }
         Transform targetBone = GetHatPlaceTransform(enemyTransform, bonePath);
-        Transform hatPrefab = SpawnSantaHatOnEnemy(targetBone, posOffset, rotOffset, scale); 
+        Transform hatPrefab = JollyHatActions.PlaceHatOnTransform(targetBone, posOffset, rotOffset, scale); 
         FixAdditionalChildrenPositions(enemyName, hatPrefab);
-
     }
 
     private static void FixAdditionalChildrenPositions(string enemyName, Transform hatParent)
@@ -45,18 +44,6 @@ internal class PlaceHatsOnEnemiesPatch
                 break;
         }
     }
-
-    internal static Transform SpawnSantaHatOnEnemy(Transform targetBone, Vector3 posOffset, Vector3 rotOffset, float scale)
-    {
-        GameObject hatPrefabSpawn = Object.Instantiate(JollyLethal.mySantaHat, targetBone);
-        hatPrefabSpawn.name = JollyLethal.JollyHatSpawnedObjName;
-        Transform objToTranslate = hatPrefabSpawn.transform;
-
-        JollyHatActions.FixHatParentChildPosScale(objToTranslate);
-        JollyHatActions.ApplyOffsetsToHat(objToTranslate, posOffset, rotOffset, scale); 
-
-        return objToTranslate;
-    }  
 
     internal static Transform GetHatPlaceTransform(Transform enemyTransform, string? bonePath)
     {
