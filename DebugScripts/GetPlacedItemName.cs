@@ -1,8 +1,6 @@
 using HarmonyLib;
-using UnityEngine;
-using System.Linq;
 
-namespace JollyLethal;
+namespace JollyLethal.DebugScripts;
 
 [HarmonyPatch(typeof(GrabbableObject))]
 internal class GetItemName

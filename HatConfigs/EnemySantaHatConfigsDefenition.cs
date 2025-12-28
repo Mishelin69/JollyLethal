@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace JollyLethal;
+namespace JollyLethal.HatConfigs;
 
 internal class EnemyHatConfigs 
 {

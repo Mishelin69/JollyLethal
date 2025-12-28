@@ -1,18 +1,27 @@
-using HarmonyLib;
 using UnityEngine;
 
-namespace JollyLethal;
+namespace JollyLethal.HatActions;
 
 internal class JollyHatActions
 {
     internal static bool DoesTransformAlreadyContainJollyHat(Transform parent, string pathToObject)
     {
-        return parent.Find($"{pathToObject}/{JollyLethal.JollyHatSpawnedObjName}") is not null;
+        return parent.Find($"{pathToObject}/{JollyLethal.myJollyHatSpawnedObjName}") is not null;
     }
 
     internal static bool DoesTransformRootAlreadyContainJollyHat(Transform parent)
     {
-        return parent.Find($"{JollyLethal.JollyHatSpawnedObjName}") is not null;
+        return parent.Find($"{JollyLethal.myJollyHatSpawnedObjName}") is not null;
+    }
+
+    internal static void HatChangeParent(Transform objParent, Transform hatParent, string pathToNewObj)
+    {
+        Transform? targetBone = objParent.Find(pathToNewObj);
+        if (targetBone is null)
+        {
+            return;
+        }
+        hatParent.SetParent(targetBone, false);
     }
 
     internal static void FixHatParentChildPosScale(Transform parent)
@@ -43,7 +52,7 @@ internal class JollyHatActions
     internal static Transform PlaceHatOnTransform(Transform targetBone, Vector3 posOffset, Vector3 rotOffset, float scale)
     {
         GameObject hatPrefabSpawn = Object.Instantiate(JollyLethal.mySantaHat, targetBone);
-        hatPrefabSpawn.name = JollyLethal.JollyHatSpawnedObjName;
+        hatPrefabSpawn.name = JollyLethal.myJollyHatSpawnedObjName;
         Transform objToTranslate = hatPrefabSpawn.transform;
 
         FixHatParentChildPosScale(objToTranslate);

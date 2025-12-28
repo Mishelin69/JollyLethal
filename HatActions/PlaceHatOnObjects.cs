@@ -1,7 +1,7 @@
 using HarmonyLib;
 using UnityEngine;
 
-namespace JollyLethal;
+namespace JollyLethal.HatActions;
 
 [HarmonyPatch(typeof(GrabbableObject))]
 internal class PlaceHatsOnItemsPatch
@@ -39,6 +39,21 @@ internal class PlaceHatsOnItemsPatch
             case "Toy robot":
                 JollyHatActions.ChangeRotOfHatParentChild(hatParent, new Vector3(0, 25, 0));
                 break;
+            case "Cat":
+                JollyHatActions.HatChangeParent(objParent, hatParent, HatConfigs.ObjectHatConfigs.CatBonePath);
+                JollyHatActions.ChangeRotOfHatParentChild(hatParent, new Vector3(0, 250, 0));
+                break;
+            case "Teeth":
+                JollyHatActions.HatChangeParent(objParent, hatParent, HatConfigs.ObjectHatConfigs.TeethBonePath);
+                break;
+            case "Rubber Ducky":
+                JollyHatActions.FixHatsScaleBasedOnSquishedParent(objParent, hatParent, 0.15f);
+                JollyHatActions.ChangeRotOfHatParentChild(hatParent, new Vector3(90, 0, 0));
+                break;
+            case "Gift":
+                JollyHatActions.FixHatsScaleBasedOnSquishedParent(objParent, hatParent, 0.5f);
+                JollyHatActions.ChangeRotOfHatParentChild(hatParent, new Vector3(90, 0, 0));
+                break;
         }
     } 
 
@@ -58,16 +73,19 @@ internal class PlaceHatsOnItemsPatch
     {
         return itemName switch
         {
-            "Fancy lamp" => ObjectHatConfigs.GetFancyLampSantaHatConfig(),
-            "Plastic cup" => ObjectHatConfigs.GetPlasticCupSantaHatConfig(),
-            "Jar of pickles" => ObjectHatConfigs.GetPicklesSantaHatConfig(),
-            "Toy robot" => ObjectHatConfigs.GetToyRobotSantaHatConfig(),
-            "Old phone" => ObjectHatConfigs.GetOldPhoneSantaHatConfig(),
-            "Plastic fish" => ObjectHatConfigs.GetPlasticFishSantaHatConfig(),
-            "Hive" => ObjectHatConfigs.GetBeeHiveSantaHatConfig(),
+            "Fancy lamp" => HatConfigs.ObjectHatConfigs.GetFancyLampSantaHatConfig(),
+            "Plastic cup" => HatConfigs.ObjectHatConfigs.GetPlasticCupSantaHatConfig(),
+            "Jar of pickles" => HatConfigs.ObjectHatConfigs.GetPicklesSantaHatConfig(),
+            "Toy robot" => HatConfigs.ObjectHatConfigs.GetToyRobotSantaHatConfig(),
+            "Old phone" => HatConfigs.ObjectHatConfigs.GetOldPhoneSantaHatConfig(),
+            "Plastic fish" => HatConfigs.ObjectHatConfigs.GetPlasticFishSantaHatConfig(),
+            "Hive" => HatConfigs.ObjectHatConfigs.GetBeeHiveSantaHatConfig(),
+            "Rubber Ducky" => HatConfigs.ObjectHatConfigs.GetRubberDuckySantaHatConfig(),
+            "Cat" => HatConfigs.ObjectHatConfigs.GetCatSantaHatConfig(),
+            "Teeth" => HatConfigs.ObjectHatConfigs.GetTeethSantaHatConfig(),
+            "Gift" => HatConfigs.ObjectHatConfigs.GetGiftSantaHatConfig(),
                 // Uncomment when debugging
-                //return ObjectHatConfigs.GetDefaultSantaHatConfig(); 
-            _ => ObjectHatConfigs.GetIncompatibleSantaHatConfig() 
+            _ => HatConfigs.ObjectHatConfigs.GetIncompatibleSantaHatConfig() 
         };
     }
 }

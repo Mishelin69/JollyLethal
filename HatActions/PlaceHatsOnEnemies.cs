@@ -1,7 +1,7 @@
 using HarmonyLib;
 using UnityEngine;
 
-namespace JollyLethal;
+namespace JollyLethal.HatActions;
 
 [HarmonyPatch(typeof(EnemyAI))]
 internal class PlaceHatsOnEnemiesPatch
@@ -57,48 +57,48 @@ internal class PlaceHatsOnEnemiesPatch
         switch (enemyName)
         {
             case "Flowerman": // Bracken
-                return EnemyHatConfigs.GetBrackenSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetBrackenSantaHatConfig();
             case "Hoarding bug":
-                return EnemyHatConfigs.GetHoardingBugSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetHoardingBugSantaHatConfig();
             case "Centipede": // Snare Flea
-                return EnemyHatConfigs.GetSnareFleaSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetSnareFleaSantaHatConfig();
             case "Crawler": // Thumper
-                return EnemyHatConfigs.GetThumperSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetThumperSantaHatConfig();
             case "Bunker Spider":
-                return EnemyHatConfigs.GetBunkerSpiderSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetBunkerSpiderSantaHatConfig();
             case "Jester":
-                return EnemyHatConfigs.GetJesterSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetJesterSantaHatConfig();
             case "Nutcracker":
-                return EnemyHatConfigs.GetNutcrackerSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetNutcrackerSantaHatConfig();
             case "Spring":
-                return EnemyHatConfigs.GetSpringSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetSpringSantaHatConfig();
             case "Masked":
-                return EnemyHatConfigs.GetMaskedSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetMaskedSantaHatConfig();
             case "Butler":
-                return EnemyHatConfigs.GetButlerSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetButlerSantaHatConfig();
             case "Maneater":
-                return EnemyHatConfigs.GetManeaterSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetManeaterSantaHatConfig();
             case "Puffer": // Spore Lizard
-                return EnemyHatConfigs.GetSporeLizardSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetSporeLizardSantaHatConfig();
             case "Blob":
-                return EnemyHatConfigs.GetBlobSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetBlobSantaHatConfig();
             case "Girl":
-                return EnemyHatConfigs.GetGirlSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetGirlSantaHatConfig();
             case "MouthDog":
-                return EnemyHatConfigs.GetMouthDogSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetMouthDogSantaHatConfig();
             case "Baboon hawk":
-                return EnemyHatConfigs.GetBaboonHawkSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetBaboonHawkSantaHatConfig();
             case "ForestGiant":
-                return EnemyHatConfigs.GetForestGiantSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetForestGiantSantaHatConfig();
             case "RadMech": // Old Bird
-                return EnemyHatConfigs.GetOldBirdSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetOldBirdSantaHatConfig();
             case "Tulip Snake":
-                return EnemyHatConfigs.GetTulipSnakeSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetTulipSnakeSantaHatConfig();
             case "Bush Wolf": // Kidnapper Fox
-                return EnemyHatConfigs.GetKidnapperFoxSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetKidnapperFoxSantaHatConfig();
             case "Clay Surgeon": // Barber
                 JollyLethal.PluginLogInfoWithPrefix($"Skipping hat for incompatible enemy: {enemyName}");
-                return EnemyHatConfigs.GetBarberSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetBarberSantaHatConfig();
                 // Incompatible Group
             case "Red Locust Bees":
             case "Docile Locust Bees":
@@ -109,11 +109,11 @@ internal class PlaceHatsOnEnemiesPatch
             case "Red pill":
             case "GiantKiwi":
                 JollyLethal.PluginLogInfoWithPrefix($"Skipping hat for incompatible enemy: {enemyName}");
-                return EnemyHatConfigs.GetIncompatibleSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetIncompatibleSantaHatConfig();
 
             default:
                 JollyLethal.PluginLogErrorWithPrefix($"Enemy '{enemyName}' not in config. Defaulting to 'Head'.");
-                return EnemyHatConfigs.GetDefaultSantaHatConfig();
+                return HatConfigs.EnemyHatConfigs.GetDefaultSantaHatConfig();
         }
     }
 }

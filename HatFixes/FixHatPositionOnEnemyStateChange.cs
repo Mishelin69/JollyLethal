@@ -1,7 +1,7 @@
 using HarmonyLib;
 using UnityEngine;
 
-namespace JollyLethal;
+namespace JollyLethal.HatFixes;
 
 [HarmonyPatch(typeof(EnemyAI))]
 internal class FixHatPositionOnEnemyStateChange
@@ -10,7 +10,7 @@ internal class FixHatPositionOnEnemyStateChange
     [HarmonyPostfix]
     private static void FixEnemyHatPosition(EnemyAI __instance, int stateIndex)
     {
-        Transform? hatTransform = RecursiveFindChild(__instance.transform, JollyLethal.JollyHatSpawnedObjName);
+        Transform? hatTransform = RecursiveFindChild(__instance.transform, JollyLethal.myJollyHatSpawnedObjName);
         if (hatTransform is null)
         {
             return;
@@ -35,18 +35,16 @@ internal class FixHatPositionOnEnemyStateChange
             case 0:
             case 1: // Boxed / Cranking State
                 JollyLethal.PluginLogInfoWithPrefix("Changing hat position due to change of jester state to winding/chilling");
-                var (_, posOffset, rotOffset, scale) = EnemyHatConfigs.GetJesterSantaHatConfig();
+                var (_, posOffset, rotOffset, scale) = HatConfigs.EnemyHatConfigs.GetJesterSantaHatConfig();
 
-                JollyHatActions.ApplyOffsetsToHat(hat, posOffset, rotOffset, scale);
+                HatActions.JollyHatActions.ApplyOffsetsToHat(hat, posOffset, rotOffset, scale);
                 break;
 
             case 2: // Popped / Chasing State
                 JollyLethal.PluginLogInfoWithPrefix("Changing hat position due to change of jester state to popped");
-                var (bonePath, posOffsetPopped, rotOffsetPopped, scalePopped) = EnemyHatConfigs.GetJesterPoppedSantaHatConfig();
-                Transform newParent = enemy.Find(bonePath);
-
-                hat.SetParent(newParent, false);
-                JollyHatActions.ApplyOffsetsToHat(hat, posOffsetPopped, rotOffsetPopped, scalePopped);
+                var (bonePath, posOffsetPopped, rotOffsetPopped, scalePopped) = HatConfigs.EnemyHatConfigs.GetJesterPoppedSantaHatConfig();
+                HatActions.JollyHatActions.HatChangeParent(enemy, hat, bonePath!);
+                HatActions.JollyHatActions.ApplyOffsetsToHat(hat, posOffsetPopped, rotOffsetPopped, scalePopped);
                 break;
         }
     }
@@ -61,20 +59,16 @@ internal class FixHatPositionOnEnemyStateChange
         if (!isAdult)
         {
             JollyLethal.PluginLogInfoWithPrefix("Changing hat position due to change of maneater appearance to smol");
-            var (bonePath, posOffset, rotOffset, scale) = EnemyHatConfigs.GetManeaterSantaHatConfig();
-            Transform newParent = enemy.Find(bonePath);
-
-            hat.SetParent(newParent, false);
-            JollyHatActions.ApplyOffsetsToHat(hat, posOffset, rotOffset, scale);
+            var (bonePath, posOffset, rotOffset, scale) = HatConfigs.EnemyHatConfigs.GetManeaterSantaHatConfig();
+            HatActions.JollyHatActions.HatChangeParent(enemy, hat, bonePath!);
+            HatActions.JollyHatActions.ApplyOffsetsToHat(hat, posOffset, rotOffset, scale);
         }
         else
         {
             JollyLethal.PluginLogInfoWithPrefix("Changing hat position due to change of maneater appearance to big");
-            var (bonePathBig, posOffsetBig, rotOffsetBig, scaleBig) = EnemyHatConfigs.GetManeaterBigSantaHatConfig();
-            Transform newParentBig = enemy.Find(bonePathBig);
-
-            hat.SetParent(newParentBig, false);
-            JollyHatActions.ApplyOffsetsToHat(hat, posOffsetBig, rotOffsetBig, scaleBig);
+            var (bonePathBig, posOffsetBig, rotOffsetBig, scaleBig) = HatConfigs.EnemyHatConfigs.GetManeaterBigSantaHatConfig();
+            HatActions.JollyHatActions.HatChangeParent(enemy, hat, bonePathBig!);
+            HatActions.JollyHatActions.ApplyOffsetsToHat(hat, posOffsetBig, rotOffsetBig, scaleBig);
         }
     }
 

@@ -5,7 +5,7 @@
         <AssemblyName>mishelin.JollyLethal</AssemblyName>
         <Product>JollyLethal</Product>
         <!-- Change to whatever version you're currently on. -->
-        <Version>1.2.0</Version>
+        <Version>1.2.1</Version>
     </PropertyGroup>
 
     <!-- Project Properties -->
@@ -63,7 +63,7 @@
       <ManifestLines Include="  &quot;name&quot;: &quot;JollyLethal&quot;,"/>
       <ManifestLines Include="  &quot;version_number&quot;: &quot;$(Version)&quot;,"/>
       <ManifestLines Include="  &quot;website_url&quot;: &quot;https://github.com/Mishelin69/JollyLethal&quot;,"/>
-      <ManifestLines Include="  &quot;description&quot;: &quot;Santa makes lethal more jolly (adds santa hats to mobs)&quot;,"/>
+      <ManifestLines Include="  &quot;description&quot;: &quot;Santa makes lethal more jolly (adds santa hats to mobs, items and works with NeedyCats mod by Jordo) &quot;,"/>
       <ManifestLines Include="  &quot;dependencies&quot;: ["/>
       <ManifestLines Include="    &quot;BepInEx-BepInExPack-5.4.2100&quot;,"/>
       <ManifestLines Include="    &quot;BMX-LobbyCompatibility-1.0.1&quot;"/>

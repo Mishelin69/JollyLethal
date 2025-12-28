@@ -20,7 +20,7 @@ public class JollyLethal : BaseUnityPlugin
 
     internal static AssetBundle? myCustomAssets;
     internal static GameObject mySantaHat;
-    internal const string JollyHatSpawnedObjName = "mishelin.JollyLethal.JollyHatParent";
+    internal const string myJollyHatSpawnedObjName = "mishelin.JollyLethal.JollyHatParent";
 
     private void Awake()
     {
@@ -36,12 +36,12 @@ public class JollyLethal : BaseUnityPlugin
     internal void LoadAssets()
     {
         string assemblyLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        myCustomAssets = AssetLoader.AssetsAwake(assemblyLocation);
+        myCustomAssets = Helper.AssetLoader.AssetsAwake(assemblyLocation);
         if (myCustomAssets is null)
         {
             return;
         }
-        mySantaHat = AssetLoader.LoadSantaHat(myCustomAssets);
+        mySantaHat = Helper.AssetLoader.LoadSantaHat(myCustomAssets);
     }
 
     internal static void Patch()

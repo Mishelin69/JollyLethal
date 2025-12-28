@@ -1,12 +1,7 @@
 using System.IO;
-using BepInEx;
-using BepInEx.Logging;
-using HarmonyLib;
-using LobbyCompatibility.Attributes;
-using LobbyCompatibility.Enums;
 using UnityEngine;
 
-namespace JollyLethal;
+namespace JollyLethal.Helper;
 
 internal static class AssetLoader
 {

@@ -1,7 +1,7 @@
 using HarmonyLib;
 using UnityEngine;
 
-namespace JollyLethal;
+namespace JollyLethal.HatActions;
 
 [HarmonyPatch(typeof(MaskedPlayerEnemy))]
 internal class PlaceHatOnMaskedPatch

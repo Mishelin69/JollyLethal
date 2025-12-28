@@ -1,6 +1,6 @@
 # JollyLethal
 
-**JollyLethal** Adds santa hats to mobs
+**JollyLethal** Adds santa hats to mobs, items and works with NeedyCats mod by Jordo.
 
 # Requirements for mod to build
 

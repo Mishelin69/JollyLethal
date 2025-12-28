@@ -1,7 +1,6 @@
 using HarmonyLib;
-using UnityEngine;
 
-namespace JollyLethal;
+namespace JollyLethal.HatFixes;
 
 [HarmonyPatch(typeof(RoundManager))]
 internal class PutHatOnDormantOldBird
@@ -26,6 +25,6 @@ internal class PutHatOnDormantOldBird
     private static void PlaceHatOnDormantOldBird(EnemyAINestSpawnObject enemy)
     {
         JollyLethal.PluginLogInfoWithPrefix("Dormant birdo");
-        PlaceHatsOnEnemiesPatch.PlaceHatOnEnemyTransform(enemy.transform, enemy.enemyType);
+        HatActions.PlaceHatsOnEnemiesPatch.PlaceHatOnEnemyTransform(enemy.transform, enemy.enemyType);
     }
 }
